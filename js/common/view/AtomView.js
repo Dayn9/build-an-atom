@@ -37,6 +37,8 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
   var VerticalCheckBoxGroup = require( 'SUN/VerticalCheckBoxGroup' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var Circle = require( 'SCENERY/nodes/Circle' );
+  var Property = require( 'AXON/Property' );
 
   // strings
   var elementString = require( 'string!BUILD_AN_ATOM/element' );
@@ -113,6 +115,23 @@ define( function( require ) {
     var electronLayer = new Node( { layerSplit: true, tandem: tandem.createTandem( 'electronLayer' ) } );
     nucleonElectronLayer.addChild( electronLayer );
 
+    // a11y - to focus around the actual nucleus, will change in size when the particles in the nucleus change
+    var nucleusFocusHighlight = new Circle( model.particleAtom.nucleusRadius, {
+      lineWidth: 2,
+      stroke: 'red',
+      center: modelViewTransform.modelToViewPosition( model.particleAtom.positionProperty.get() ),
+    } );
+    this.addChild( nucleusFocusHighlight );
+
+      // whenever a nucleon is added or removed, change the highlight radius
+    Property.multilink( [ model.particleAtom.protonCountProperty, model.particleAtom.neutronCountProperty ], function( protonCount, neutronCount ) {
+      
+      // TODO: Is there another way to link to the changing nucleus configuration
+      model.particleAtom.reconfigureNucleus();
+      var radiusOffset = model.particleAtom.nucleusRadius === 0 ? 0 : 4;
+      nucleusFocusHighlight.radius = model.particleAtom.nucleusRadius + radiusOffset;
+    } );
+
     // Add the nucleon particle views.
     var nucleonsGroupTandem = tandem.createGroupTandem( 'nucleons' );
     var electronsGroupTandem = tandem.createGroupTandem( 'electrons' );
@@ -174,16 +193,32 @@ define( function( require ) {
     model.electronShellDepictionProperty.link( updateElectronVisibility );
 
     // Add the front portion of the buckets. This is done separately from the bucket holes for layering purposes.
-    var bucketFrontLayer = new Node( { tandem: tandem.createTandem( 'bucketFrontLayer' ) } );
+    var bucketFrontLayer = new Node( {
+      tandem: tandem.createTandem( 'bucketFrontLayer' )
+    } );
 
     _.each( model.buckets, function( bucket ) {
       var bucketFront = new BucketFront( bucket, modelViewTransform, {
-        tandem: tandem.createTandem( bucket.sphereBucketTandem.tail + 'Front' )
+        tandem: tandem.createTandem( bucket.sphereBucketTandem.tail + 'Front' ),
+
+        // a11y - TODO: features are experimental for now, if everything seems good, we will move to scenery-phet
+        tagName: 'button'
       } );
       bucketFrontLayer.addChild( bucketFront );
       bucketFront.addInputListener( new BucketDragHandler( bucket, bucketFront, modelViewTransform, {
         tandem: tandem.createTandem( bucket.sphereBucketTandem.tail + 'DragHandler' )
       } ) );
+
+      // a11y -
+      bucketFront.addAccessibleInputListener( {
+        click: function() {
+          // get the closest particle to nucleus
+          var nearestParticle = bucket.extractClosestParticle( new Vector2( 0, 0 ) );
+
+          // move it to the first drop location (offset by a little to indicate it is still being placed)
+          model.moveParticleToDropLocation( nearestParticle, model.accessibleDropLocations.NUCLEUS.minusXY( 5, -5 ) );
+        }
+      } );  
     } );
 
     // Add the particle count indicator.

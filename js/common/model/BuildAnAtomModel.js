@@ -76,6 +76,15 @@ define( function( require ) {
     // Create the atom that the user will build, modify, and generally play with.
     this.particleAtom = new ParticleAtom( { tandem: tandem.createTandem( 'particleAtom' ) } );
 
+    // @public (a11y, read-only) - the locations that a particle can be dropped by a keyboard during drag and drop
+    // particles can be dropped in the center of the nucleus, along the inner orbit ring, and
+    // along the outer orbit ring
+    this.accessibleDropLocations = {
+      NUCLEUS: new Vector2( 0, 0 ),
+      INNER_ORBIT: new Vector2( this.particleAtom.innerElectronShellRadius, 0 ),
+      OUTER_ORBIT: new Vector2( this.particleAtom.outerElectronShellRadius, 0 )
+    };
+
     // Create the buckets that will hold the sub-atomic particles.
     this.buckets = {
       protonBucket: new SphereBucket( {
@@ -250,6 +259,16 @@ define( function( require ) {
         // animation is not running, make sure nucleus is in center of atom
         this.particleAtom.nucleusOffsetProperty.set( Vector2.ZERO );
       }
+    },
+
+    /**
+     * Move a particle to a specific location, without placing it in the nucleus
+     * @public (a11y)
+     * @param  {Particle} particle
+     * @param  {Vector2} dropLocation - one of the posssible drop locations, see this.accessibleDropLocations
+     */
+    moveParticleToDropLocation: function( particle, dropLocation ) {
+      particle.positionProperty.set( dropLocation );
     },
 
     // @private
