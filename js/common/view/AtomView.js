@@ -123,9 +123,9 @@ define( function( require ) {
     } );
     this.addChild( nucleusFocusHighlight );
 
-      // whenever a nucleon is added or removed, change the highlight radius
+    // whenever a nucleon is added or removed, change the highlight radius
     Property.multilink( [ model.particleAtom.protonCountProperty, model.particleAtom.neutronCountProperty ], function( protonCount, neutronCount ) {
-      
+
       // TODO: Is there another way to link to the changing nucleus configuration
       model.particleAtom.reconfigureNucleus();
       var radiusOffset = model.particleAtom.nucleusRadius === 0 ? 0 : 4;
@@ -218,7 +218,7 @@ define( function( require ) {
           // move it to the first drop location (offset by a little to indicate it is still being placed)
           model.moveParticleToDropLocation( nearestParticle, model.accessibleDropLocations.NUCLEUS.minusXY( 5, -5 ) );
         }
-      } );  
+      } );
     } );
 
     // Add the particle count indicator.
@@ -348,25 +348,18 @@ define( function( require ) {
     } ) );
     orbitsRadioButton.top = electronViewButtonGroup.bottom + 5;
     orbitsRadioButton.left = electronViewButtonGroup.left;
+
+    // a11y
+    orbitsRadioButton.setAccessibleAttribute( 'name', 'electrons' );
     electronViewButtonGroup.addChild( orbitsRadioButton );
+
     cloudRadioButton.top = electronViewButtonGroup.bottom + 5;
     cloudRadioButton.left = electronViewButtonGroup.left;
+
+    // a11y
+    cloudRadioButton.setAccessibleAttribute( 'name', 'electrons' );
     electronViewButtonGroup.addChild( cloudRadioButton );
     this.addChild( electronViewButtonGroup );
-
-    // Add the reset button.
-    var resetAllButton = new ResetAllButton( {
-      listener: function() {
-        self.model.reset();
-        self.reset();
-      },
-      right: this.layoutBounds.maxX - CONTROLS_INSET,
-      bottom: this.layoutBounds.maxY - CONTROLS_INSET,
-      radius: BAASharedConstants.RESET_BUTTON_RADIUS,
-      touchAreaDilation: 8,
-      tandem: tandem.createTandem( 'resetAllButton' )
-    } );
-    this.addChild( resetAllButton );
 
     // Do the layout.
     particleCountDisplay.top = CONTROLS_INSET;
@@ -386,6 +379,20 @@ define( function( require ) {
 
     this.addChild( nucleonElectronLayer );
     this.addChild( bucketFrontLayer );
+
+    // Add the reset button.
+    var resetAllButton = new ResetAllButton( {
+      listener: function() {
+        self.model.reset();
+        self.reset();
+      },
+      right: this.layoutBounds.maxX - CONTROLS_INSET,
+      bottom: this.layoutBounds.maxY - CONTROLS_INSET,
+      radius: BAASharedConstants.RESET_BUTTON_RADIUS,
+      touchAreaDilation: 8,
+      tandem: tandem.createTandem( 'resetAllButton' )
+    } );
+    this.addChild( resetAllButton );
   }
 
   buildAnAtom.register( 'AtomView', AtomView );
