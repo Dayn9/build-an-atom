@@ -37,8 +37,6 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
   var VerticalCheckBoxGroup = require( 'SUN/VerticalCheckBoxGroup' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
-  var Property = require( 'AXON/Property' );
 
   // strings
   var elementString = require( 'string!BUILD_AN_ATOM/element' );
@@ -114,23 +112,6 @@ define( function( require ) {
     // Add the layer where the electrons will exist.
     var electronLayer = new Node( { layerSplit: true, tandem: tandem.createTandem( 'electronLayer' ) } );
     nucleonElectronLayer.addChild( electronLayer );
-
-    // a11y - to focus around the actual nucleus, will change in size when the particles in the nucleus change
-    var nucleusFocusHighlight = new Circle( model.particleAtom.nucleusRadius, {
-      lineWidth: 2,
-      stroke: 'red',
-      center: modelViewTransform.modelToViewPosition( model.particleAtom.positionProperty.get() ),
-    } );
-    this.addChild( nucleusFocusHighlight );
-
-    // whenever a nucleon is added or removed, change the highlight radius
-    Property.multilink( [ model.particleAtom.protonCountProperty, model.particleAtom.neutronCountProperty ], function( protonCount, neutronCount ) {
-
-      // TODO: Is there another way to link to the changing nucleus configuration
-      model.particleAtom.reconfigureNucleus();
-      var radiusOffset = model.particleAtom.nucleusRadius === 0 ? 0 : 4;
-      nucleusFocusHighlight.radius = model.particleAtom.nucleusRadius + radiusOffset;
-    } );
 
     // Add the nucleon particle views.
     var nucleonsGroupTandem = tandem.createGroupTandem( 'nucleons' );
@@ -216,7 +197,7 @@ define( function( require ) {
           var nearestParticle = bucket.extractClosestParticle( new Vector2( 0, 0 ) );
 
           // move it to the first drop location (offset by a little to indicate it is still being placed)
-          model.moveParticleToDropLocation( nearestParticle, model.accessibleDropLocations.NUCLEUS.minusXY( 5, -5 ) );
+          model.moveParticleToDropLocation( nearestParticle, model.accessibleDropLocations.NUCLEUS.minusXY( 50, -50 ) );
         }
       } );
     } );
