@@ -192,14 +192,17 @@ define( function( require ) {
 
       bucketFront.addAccessibleInputListener( {
         click: function() {
-          // get the closest particle to nucleus
-          var nearestParticle = bucket.extractClosestParticle( new Vector2( 0, 0 ) );
+          if ( bucket.getParticleList().length > 0 ) {
 
-          // move it to the first drop location (offset by a little to indicate it is still being placed)
-          model.moveParticleToDropLocation( nearestParticle, model.particleAtom.positionProperty.get() );
+            // get the closest particle to nucleus
+            var nearestParticle = bucket.extractClosestParticle( new Vector2( 0, 0 ) );
 
-          // focus the atom for placement of particles
-          atomNode.electronShell.handleAccessibleDrag( nearestParticle, bucketFront );
+            // move it to the first drop location (offset by a little to indicate it is still being placed)
+            model.moveParticleToDropLocation( nearestParticle, model.particleAtom.positionProperty.get() );
+
+            // focus the atom for placement of particles
+            atomNode.electronShell.handleAccessibleDrag( nearestParticle, bucketFront );
+          }
         }
       } );
     } );
