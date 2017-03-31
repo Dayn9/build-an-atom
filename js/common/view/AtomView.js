@@ -216,9 +216,8 @@ define( function( require ) {
     // Add the periodic table display inside of an accordion box.
     var periodicTableAndSymbol = new PeriodicTableAndSymbol(
       model.particleAtom,
-      tandem.createTandem( 'periodicTableAndSymbol' ),
-      {
-        pickable: false,
+      tandem.createTandem( 'periodicTableAndSymbol' ), {
+        pickable: false
       }
     );
     periodicTableAndSymbol.scale( 0.55 ); // Scale empirically determined to match layout in design doc.
