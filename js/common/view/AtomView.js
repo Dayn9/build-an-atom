@@ -196,7 +196,7 @@ define( function( require ) {
           var nearestParticle = bucket.extractClosestParticle( new Vector2( 0, 0 ) );
 
           // move it to the first drop location (offset by a little to indicate it is still being placed)
-          // model.moveParticleToDropLocation( nearestParticle, model.accessibleDropLocations.NUCLEUS.minusXY( 50, -50 ) );
+          model.moveParticleToDropLocation( nearestParticle, model.particleAtom.positionProperty.get() );
 
           // focus the atom for placement of particles
           atomNode.electronShell.handleAccessibleDrag( nearestParticle );
