@@ -199,8 +199,7 @@ define( function( require ) {
           model.moveParticleToDropLocation( nearestParticle, model.particleAtom.positionProperty.get() );
 
           // focus the atom for placement of particles
-          atomNode.electronShell.handleAccessibleDrag( nearestParticle );
-          // atomNode.electronShell.focus();
+          atomNode.electronShell.handleAccessibleDrag( nearestParticle, bucketFront );
         }
       } );
     } );
