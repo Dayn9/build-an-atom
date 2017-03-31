@@ -190,12 +190,16 @@ define( function( require ) {
         tandem: tandem.createTandem( bucket.sphereBucketTandem.tail + 'DragHandler' )
       } ) );
 
+      // a11y - pick up a particle to place it in the atom when user presses 'spacebar' or 'enter' - particle
+      // is extracted from the bucket and placed in the atom, the ElectronShellView handles the rest of
+      // the drag and drop interaction
       bucketFront.addAccessibleInputListener( {
         click: function() {
           if ( bucket.getParticleList().length > 0 ) {
 
             // get the closest particle to nucleus
-            var nearestParticle = bucket.extractClosestParticle( new Vector2( 0, 0 ) );
+            var atomCenterInViewCoordinates = modelViewTransform.modelToViewPosition( model.particleAtom.positionProperty.get() );
+            var nearestParticle = bucket.extractClosestParticle(  atomCenterInViewCoordinates );
 
             // move it to the first drop location (offset by a little to indicate it is still being placed)
             model.moveParticleToDropLocation( nearestParticle, model.particleAtom.positionProperty.get() );
@@ -207,10 +211,10 @@ define( function( require ) {
       } );
     } );
 
-    // Add the particle count indicator.
+    // Add the particle count indicator - display width arbitrarily chosen
     var particleCountDisplay = new ParticleCountDisplay( model.particleAtom, 13, 250, {
       tandem: tandem.createTandem( 'particleCountDisplay' )
-    } );  // Width arbitrarily chosen.
+    } );
     this.addChild( particleCountDisplay );
 
     // Add the periodic table display inside of an accordion box.
