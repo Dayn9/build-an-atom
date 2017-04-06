@@ -259,7 +259,7 @@ define( function( require ) {
      * @param  {Vector2} dropLocation - one of the posssible drop locations, see this.accessibleDropLocations
      */
     moveParticleToDropLocation: function( particle, dropLocation ) {
-      particle.positionProperty.set( dropLocation );
+      particle.destinationProperty.set( dropLocation );
     },
 
     // @private

@@ -248,6 +248,9 @@ define( function( require ) {
             var atomCenterInViewCoordinates = modelViewTransform.modelToViewPosition( model.particleAtom.positionProperty.get() );
             var nearestParticle = bucket.extractClosestParticle(  atomCenterInViewCoordinates );
 
+            // Trigger animation on the particle even though it is still user controlled.
+            nearestParticle.isAccessibleControlled = true;
+
             // move it to the first drop location (offset by a little to indicate it is still being placed)
             model.moveParticleToDropLocation( nearestParticle, atomNode.electronShell.getCurrentParticleDropLocation());
 
