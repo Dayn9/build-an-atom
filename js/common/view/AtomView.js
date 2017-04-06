@@ -117,10 +117,38 @@ define( function( require ) {
     var nucleonsGroupTandem = tandem.createGroupTandem( 'nucleons' );
     var electronsGroupTandem = tandem.createGroupTandem( 'electrons' );
 
+    // create a map that references the particle view from a given particle model
+    // var particleViewMap = {};
+
+    // when a particle is added, add the view component to the ElectronShell -
+    // the particles need to be children of the electron shell so that the DOM elements
+    // are in the correct place in the parallel DOM.
+    // TODO: This caused a bug - scenery had trouble disposing of accessible instances that
+    // were using the DAG feature.
+    // model.particleAtom.protons.addItemAddedListener( function( addedItem ) {
+    //   atomNode.electronShell.addChild( particleViewMap[ addedItem.id ] );
+    // } );
+
+    // model.particleAtom.neutrons.addItemAddedListener( function( addedItem ) {
+    //   atomNode.electronShell.addChild( particleViewMap[ addedItem.id ] );
+    // } );
+
+    // model.particleAtom.protons.addItemRemovedListener( function( removedItem ) {
+    //   atomNode.electronShell.removeChild( particleViewMap[ removedItem.id ] );
+    // } );
+
+    // model.particleAtom.neutrons.addItemRemovedListener( function( removedItem ) {
+    //   atomNode.electronShell.removeChild( particleViewMap[ removedItem.id ] );
+    // } );
+
     model.nucleons.forEach( function( nucleon ) {
-      nucleonLayers[ nucleon.zLayerProperty.get() ].addChild( new ParticleView( nucleon, modelViewTransform, {
+      var nucleonNode = new ParticleView( nucleon, modelViewTransform, {
         tandem: nucleonsGroupTandem.createNextTandem()
-      } ) );
+      } );
+
+      // add view to map
+      // particleViewMap[ nucleon.id ] = nucleonNode;
+      nucleonLayers[ nucleon.zLayerProperty.get() ].addChild( nucleonNode );
 
       // Add a listener that adjusts a nucleon's z-order layering.
       nucleon.zLayerProperty.link( function( zLayer ) {
@@ -158,10 +186,29 @@ define( function( require ) {
     } );
 
     // Add the electron particle views.
+    // model.particleAtom.electrons.addItemAddedListener( function( addedItem ) {
+
+    //   particleViewMap[ addedItem.id ].mutate( {
+
+    //     // a11y
+    //     tagName: 'div',
+    //     ariaRole: 'option',
+    //     focusable: false
+    //   } );
+    //   atomNode.electronShell.addChild( particleViewMap[ addedItem.id ] );
+    // } );
+
+    // model.particleAtom.electrons.addItemRemovedListener( function( removedItem ) {
+    //   atomNode.electronShell.removeChild( particleViewMap[ removedItem.id ] );
+    // } );
+
     model.electrons.forEach( function( electron ) {
-      electronLayer.addChild( new ParticleView( electron, modelViewTransform, {
+      var electronNode = new ParticleView( electron, modelViewTransform, {
         tandem: electronsGroupTandem.createNextTandem()
-      } ) );
+      } );
+
+      // particleViewMap[ electron.id ] = electronNode;
+      electronLayer.addChild( electronNode );
     } );
 
     // When the electrons are represented as a cloud, the individual particles become invisible when added to the atom.
