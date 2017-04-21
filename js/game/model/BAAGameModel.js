@@ -223,7 +223,11 @@ define( function( require ) {
       this.elapsedTimeProperty.set( 0 );
       var self = this;
       this.gameTimerId = window.setInterval( function() {
-        self.elapsedTimeProperty.set( self.elapsedTimeProperty.get() + 1 );
+
+        // TODO: this is a hack, we should run off of the joist clock
+        if (phet.joist.sim.activeProperty.value) {
+          self.elapsedTimeProperty.set( self.elapsedTimeProperty.get() + 1 );
+        }
       }, 1000 );
     },
 
