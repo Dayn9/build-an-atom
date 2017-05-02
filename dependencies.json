@@ -1,11 +1,11 @@
 {
-  "comment": "# build-an-atom 1.3.0-keyboard-nav.7 Tue Apr 25 2017 10:06:23 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# build-an-atom 1.3.0-keyboard-nav.8 Tue May 02 2017 09:57:30 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "5c3f92048a9c2ffd6df8ede54fd64f1f7a7e4ef2",
     "branch": "master"
   },
   "axon": {
-    "sha": "f475e68ce3e6340da58610a1524d131b44bf6c51",
+    "sha": "5db49894e7dc1018e63f61c751accee25eb05bdd",
     "branch": "master"
   },
   "brand": {
@@ -13,23 +13,23 @@
     "branch": "master"
   },
   "build-an-atom": {
-    "sha": "4475a1957f33a27dd2836eb63c5e6937f3c91b3b",
+    "sha": "6327065cda612a2012cac87683a27bbe72f46b1f",
     "branch": "keyboard-nav"
   },
   "chipper": {
-    "sha": "3061f107c8678475135e3d0809cf17a164776348",
+    "sha": "081a5c3aea2f5e74df1a1aac7c2d373179d9abdb",
     "branch": "master"
   },
   "dot": {
-    "sha": "57936fff9a213e6ff0c17fc2d3c1b2972f2095dd",
+    "sha": "ef145e365ef9dd517e6178a0b2ea65e4c533d73d",
     "branch": "master"
   },
   "joist": {
-    "sha": "06775098c51402473bd3b3871b9e7362f52d94f5",
+    "sha": "83760a71dd74e47943578e4037d3743d18099265",
     "branch": "master"
   },
   "kite": {
-    "sha": "0cc5b62077af04ac7765ed26ee1a410de8612ae1",
+    "sha": "f36771da57b8183e2973b09cb7d05e1375925c95",
     "branch": "master"
   },
   "phet-core": {
@@ -37,7 +37,7 @@
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "d0ffe176ab56f58ca5f49d61d2be48c33d7698d4",
+    "sha": "3ad92ec57b50aa2f2e49d52bd880ae63e24fb92c",
     "branch": "master"
   },
   "query-string-machine": {
@@ -45,11 +45,11 @@
     "branch": "master"
   },
   "scenery": {
-    "sha": "d1d2ca2da5b54aefde7704318d5c4ceaf6d27612",
+    "sha": "7bcac8e0f887d73a6215ff684f272d94fde7f7f9",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "6dc1a0644474a144e5486453de16350959c7137d",
+    "sha": "229ed67592cc9ef0af8500690bc26f0586925b89",
     "branch": "master"
   },
   "sherpa": {
@@ -57,11 +57,11 @@
     "branch": "master"
   },
   "shred": {
-    "sha": "bc025bd134d90b6317597fa93f7b0ad06c643907",
+    "sha": "8b9c44857e6aceb9dae21ba9de81e887d4077aae",
     "branch": "keyboard-nav"
   },
   "sun": {
-    "sha": "3967c777f10cfdab2feff2626efe9ca6e6b2cc41",
+    "sha": "ab67875520ed35c2a00f6f4197cc9a14f3a14b0e",
     "branch": "master"
   },
   "tandem": {
